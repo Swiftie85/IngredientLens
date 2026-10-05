@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var button1 = "Вставить состав"
-    @State private var button2 = "Сканировать состав"
+    @State private var state1 = ""
+    @State private var state2 = ""
     var body: some View {
         VStack {
             Text("IngredientLens")
@@ -18,10 +18,10 @@ struct ContentView: View {
                 .foregroundStyle(.white)
                 .padding(10)
                 .background(Color.green, in: RoundedRectangle(cornerRadius: 8))
-                .offset(y: -200)
-            
-            Button(button1) {
-                button1 = "Скоро будет магия"
+                
+            Spacer()
+            Button("Вставить состав") {
+                state1 = "Скоро будет магия"
                 
             }
             .font(.headline)
@@ -29,10 +29,18 @@ struct ContentView: View {
             .padding(10)
             .foregroundStyle(Color.white)
             .background(Color.blue, in: RoundedRectangle(cornerRadius: 8))
-            .offset(y: 250)
+
             
-            Button(button2) {
-                button2 = "Скоро будет магия"
+            if !state1.isEmpty {
+                Text(state1)
+                    .font(.headline)
+                    .fontWeight(.light)
+                    .foregroundStyle(.gray)
+
+            }
+            
+            Button("Сканировать состав") {
+                state2 = "Скоро будет магия"
                 
             }
             .font(.headline)
@@ -40,7 +48,15 @@ struct ContentView: View {
             .padding(10)
             .foregroundStyle(Color.white)
             .background(Color.blue, in: RoundedRectangle(cornerRadius: 8))
-            .offset(y: 260)
+            
+            if !state2.isEmpty {
+                Text(state2)
+                    .font(.headline)
+                    .fontWeight(.light)
+                    .foregroundStyle(.gray)
+
+            }
+
         }
         .padding()
 
