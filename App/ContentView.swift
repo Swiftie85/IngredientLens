@@ -8,54 +8,66 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var state1 = ""
-    @State private var state2 = ""
+    @State private var isInputVisible = false
+    @State private var ingredientsText = ""
+    @State private var analysisResult = ""
+    private var trimmedIngredientsText: String {
+        ingredientsText.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
     var body: some View {
         VStack {
             Text("IngredientLens")
+                .foregroundStyle(.green)
                 .font(.largeTitle)
                 .fontWeight(.bold)
-                .foregroundStyle(.white)
                 .padding(10)
-                .background(Color.green, in: RoundedRectangle(cornerRadius: 8))
-                
+
             Spacer()
+            
+            if isInputVisible {
+                TextEditor(text: $ingredientsText)
+                    .scrollContentBackground(.hidden)
+                    .frame(height: 150)
+                    .background(Color.white, in: RoundedRectangle(cornerRadius: 8))
+                    .overlay {
+                        RoundedRectangle(cornerRadius: 8)
+                            .stroke(Color.green, lineWidth: 1)
+                    }
+                Button("Анализ состава") {
+                    analysisResult = trimmedIngredientsText
+                }
+                .disabled(trimmedIngredientsText.isEmpty)
+                if !analysisResult.isEmpty {
+                    Text(analysisResult)
+                        .font(.headline)
+                        .fontWeight(.light)
+                        .foregroundStyle(.gray)
+                }
+
+
+            }
+            
             Button("Вставить состав") {
-                state1 = "Скоро будет магия"
+                isInputVisible.toggle()
                 
             }
             .font(.headline)
             .fontWeight(.bold)
+            .frame(width: 180)
             .padding(10)
             .foregroundStyle(Color.white)
             .background(Color.blue, in: RoundedRectangle(cornerRadius: 8))
-
-            
-            if !state1.isEmpty {
-                Text(state1)
-                    .font(.headline)
-                    .fontWeight(.light)
-                    .foregroundStyle(.gray)
-
-            }
             
             Button("Сканировать состав") {
-                state2 = "Скоро будет магия"
+                
                 
             }
             .font(.headline)
             .fontWeight(.bold)
+            .frame(width: 180)
             .padding(10)
             .foregroundStyle(Color.white)
             .background(Color.blue, in: RoundedRectangle(cornerRadius: 8))
-            
-            if !state2.isEmpty {
-                Text(state2)
-                    .font(.headline)
-                    .fontWeight(.light)
-                    .foregroundStyle(.gray)
-
-            }
 
         }
         .padding()
